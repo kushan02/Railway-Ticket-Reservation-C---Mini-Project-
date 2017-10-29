@@ -72,5 +72,7 @@ void displayBooking_TrainDetails(struct TXN_S *obj);
 
 void displayBooking_Header();
 
+unsigned int strToint(char *str);
+
 
 #endif //SEM1_C_MINI_PROJECT_GLOBAL_H

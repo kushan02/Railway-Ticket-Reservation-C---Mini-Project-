@@ -63,10 +63,51 @@ int checkDate(char *date) {
         date[5] == '/' && isdigit(date[6]) &&
         isdigit(date[7]) && isdigit(date[8]) && isdigit(date[9])) {
 
-        return 1;
+
+        char dat[3];
+        char month[3];
+        char year[5];
+
+        strncpy(dat, date, 2);
+        strncpy(month, &date[3], 2);
+        strncpy(year, &date[6], 4);
+
+        dat[2] = '\0';
+        month[2] = '\0';
+        year[4] = '\0';
+
+        int di = strToint(dat);
+        int mi = strToint(month);
+        int yi = strToint(year);
+
+        //     printf("\n## %d, %d, %d\n", di, mi, yi);
+        //    printf("\n## %s, %s, %s\n", dat, month, year);
+
+        if (di > 0 && di <= 31) {
+            if (mi > 0 && mi <= 12) {
+                if (yi >= 2017 && yi <= 3000) {
+                    return 1;
+                }
+            }
+        }
+        
+
     }
 
     return 0;
+}
+
+
+unsigned int strToint(char *str) {
+    unsigned long mult = 1;
+    unsigned long re = 0;
+    int len = strlen(str);
+    int i = 0;
+    for (i = len - 1; i >= 0; i--) {
+        re = re + ((int) str[i] - 48) * mult;
+        mult = mult * 10;
+    }
+    return re;
 }
 
 
