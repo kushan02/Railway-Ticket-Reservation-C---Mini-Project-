@@ -151,7 +151,7 @@ int delTrain() {
     } else {
         char ch;
         printf("\nERROR: Train number %d does not exists", tno);
-        printf("\nPress enter to try again or any other key to exit...\n");
+        printf("\n\nPress enter to try again or any other key to exit...\n");
         if ((ch = getch()) != '\r')
             exit(0);
 

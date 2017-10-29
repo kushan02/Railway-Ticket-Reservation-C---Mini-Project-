@@ -11,5 +11,6 @@ int trainExists(int);
 
 void displayTxns();
 
+int cancelTicket();
 
 #endif //SEM1_C_MINI_PROJECT_TRAIN_FUNCTION_COMMON_H

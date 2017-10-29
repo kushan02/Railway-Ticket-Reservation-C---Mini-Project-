@@ -32,5 +32,5 @@ int ticketNoExists(unsigned long tickno);
 
 void dispTicket();
 
-
+void addTicketBack(int,int);
 #endif //SEM1_C_MINI_PROJECT_BOOK_TRAIN_H

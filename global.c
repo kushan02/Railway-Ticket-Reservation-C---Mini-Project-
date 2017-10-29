@@ -90,7 +90,7 @@ int checkDate(char *date) {
                 }
             }
         }
-        
+
 
     }
 
@@ -98,7 +98,7 @@ int checkDate(char *date) {
 }
 
 
-unsigned int strToint(char *str) {
+int strToint(char *str) {
     unsigned long mult = 1;
     unsigned long re = 0;
     int len = strlen(str);
@@ -113,20 +113,21 @@ unsigned int strToint(char *str) {
 
 void displayBooking_Header() {
     clear();
-    printf("\n%20s%20s%20s%20s%20s", "TICKET NO.", "NAME  ", "D.O.J.  ", "TRAIN NO.", "FARE (in Rs.)");
+    printf("\n%20s%20s%20s%20s%20s%20s", "TICKET NO.", "NAME  ", "D.O.J.  ", "TRAIN NO.", "SEATS", "FARE (in Rs.)");
 }
 
 void displayBooking_Separator() {
     int i;
     printf("\n");
-    for (i = 0; i < 5 * 20; i++) {
+    for (i = 0; i < 6 * 20; i++) {
         printf("-");
     }
 }
 
 void displayBooking_TrainDetails(struct TXN_S *obj) {
 
-    printf("\n%20llu%20s%20s%20d%20ld", obj->ticket_no, obj->name, obj->date, obj->train_no, obj->fare);
+    printf("\n%20llu%20s%20s%20d%20d%20ld", obj->ticket_no, obj->name, obj->date, obj->train_no, obj->no_of_seats,
+           obj->fare);
 
 }
 

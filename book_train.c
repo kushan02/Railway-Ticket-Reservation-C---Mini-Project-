@@ -425,5 +425,109 @@ void displayTxns() {
 
 }
 
+int cancelTicket() {
+    unsigned long tno;
+    FILE *fp, *fp_tmp;
+
+    struct TXN_S obj;
+
+    int train_n;
+    int ticket_n;
+
+    clear();
+
+    printf("Cancel a Ticket:\n\n");
+
+    printf("Enter Ticket Number to cancel: ");
+    scanf("%ldu", &tno);
+
+    int i = 0;
+    char ch;
+
+
+    if (ticketNoExists(tno)) {
+
+        do {
+            clearBuffer();
+            if (i != 0) {
+                printf("\nERROR: Enter valid selection (y for yes and n for no).\n");
+            }
+
+            printf("\nAre you sure you want to cancel your ticket? (y/n): ");
+            scanf("%c", &ch);
+
+            ++i;
+
+        } while (!(ch == 'y' || ch == 'n'));
+
+        if (ch == 'y') {
+            fp = fopen(txn_fname, "rb");
+            fp_tmp = fopen("tmp_ticket.dat", "wb");
+
+            while (fread(&obj, sizeof(obj), 1, fp)) {
+                if (obj.ticket_no == tno) {
+                    train_n = obj.train_no;
+                    ticket_n = obj.no_of_seats;
+                    continue;
+                }
+                fwrite(&obj, sizeof(obj), 1, fp_tmp);
+            }
+
+            fclose(fp);
+            fclose(fp_tmp);
+
+            remove(txn_fname);
+
+            rename("tmp_ticket.dat", txn_fname);
+
+            addTicketBack(train_n, ticket_n);
+            //bookTicket(train_n, -1 * ticket_n);
+
+            printf("\nTicket number %d cancelled successfully!\n\nPress enter to continue.", tno);
+            getch();
+            return 1;
+
+        } else {
+            printf("\nYour booking still exists. You will now be redirected to main menu.\n\nPress enter to continue...");
+            getch();
+            return 1;
+
+        }
+    } else {
+        char ch;
+        printf("\nERROR: Ticket number %d does not exists", tno);
+        printf("\n\nPress enter to try again or any other key to exit...\n");
+        if ((ch = getch()) != '\r')
+            exit(0);
+
+        return 0;
+    }
+
+
+}
+
+void addTicketBack(int train, int ticket) {
+    FILE *fp, *ftmp;
+    fp = fopen(train_record_file, "rb");
+    ftmp = fopen("tmp_add.bin", "wb");
+
+    struct TRAIN_S obj;
+
+    while (fread(&obj, sizeof(obj), 1, fp)) {
+        if (train == obj.train_number) {
+            obj.seat_available = obj.seat_available + ticket;
+        }
+
+        fwrite(&obj, sizeof(obj), 1, ftmp);
+    }
+
+    fclose(fp);
+    fclose(ftmp);
+
+    remove(train_record_file);
+    rename("tmp_add.bin", train_record_file);
+
+}
+
 
 

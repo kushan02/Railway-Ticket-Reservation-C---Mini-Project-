@@ -38,7 +38,8 @@ void reservation_menu() {
             while (!book_train());
             return;
 
-        case 5: // cancel ticket
+        case 5:
+            while (!cancelTicket());
             return;
 
         case 6:
