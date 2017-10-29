@@ -82,6 +82,9 @@ void getTrainDetails() {
     printf("\nSeats available: ");
     scanf("%d", &train_obj.seat_available);
 
+    printf("\nFare: ");
+    scanf("%d", &train_obj.fare);
+
 }
 
 void displayTrains() {

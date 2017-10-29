@@ -21,6 +21,7 @@ struct TRAIN_S {
     char departure_time[6];
     char arrival_time[6];
     unsigned int seat_available;
+    unsigned long fare;
 };
 
 extern struct TRAIN_S train_obj;

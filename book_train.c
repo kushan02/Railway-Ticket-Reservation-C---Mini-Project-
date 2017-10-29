@@ -12,16 +12,9 @@ int book_train() {
     int i = 0;
     char ch;
 
-   // FILE *fp;
-
     clear();
 
     printf("Reserve a train ticket:\n\n");
-
-    //struct TRAIN_S obj;
-
-    //  getFindDetails(&obj);
-
 
     while (!findTrain()); // Keep repeating until the train is not found
 
@@ -36,9 +29,6 @@ int book_train() {
         ++i;
     } while (!trainExists(tno));
 
-
-    // if (trainExists(tno)) {
-
     i = 0;
 
     do {
@@ -52,15 +42,21 @@ int book_train() {
 
     } while (tickets <= 0);
 
-    if (isTicketAvbl(tno, tickets)) {
+    long total_fare = 0;
+
+    if (isTicketAvbl(tno, tickets, &total_fare)) {
 
         i = 0;
 
         printf("\n%d tickets for train number %d are available.", tickets, tno);
 
-        clearBuffer();
+        total_fare = total_fare * tickets;
+
+        printf("\n\nTotal fare for %d tickets : Rs. %ld", tickets, total_fare);
+
 
         do {
+            clearBuffer();
             if (i != 0) {
                 printf("\nERROR: Enter valid selection (y for yes and n for no).");
             }
@@ -92,12 +88,9 @@ int book_train() {
         return 0;
     }
 
-    //  }
-
-
 }
 
-int isTicketAvbl(int tno, int tickets) {
+int isTicketAvbl(int tno, int tickets, long *cost) {
 
     FILE *fp;
     fp = fopen("tmp_find.bin", "rb");
@@ -107,12 +100,12 @@ int isTicketAvbl(int tno, int tickets) {
         if (obj.train_number == tno) {
 
             if (obj.seat_available >= tickets) {
+                *cost = obj.fare;
                 fclose(fp);
                 remove("tmp_find.bin");
 
                 return 1;
             }
-
         }
     }
 
@@ -193,8 +186,6 @@ int findTrain() {
 
         displayMenu_Separator();
 
-        // displayMenu_Footer();
-
         fclose(ftmp);
         fclose(fp);
 
@@ -215,7 +206,6 @@ int findTrain() {
 
 
 void getFindDetails(struct TRAIN_S *obj) {
-    //   char t_date[20];
 
     clear();
 
@@ -226,9 +216,4 @@ void getFindDetails(struct TRAIN_S *obj) {
 
     printf("\nDestination Station: ");
     getString(obj->destination);
-
-    /*  printf("\nTravel Date: ");
-      getString(t_date);
-  */
-
 }
