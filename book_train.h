@@ -22,4 +22,15 @@ void bookTicket(int, int);
 
 void getUserDetails();
 
+//struct TXN_S;
+
+void generateTicket();
+
+unsigned long rand_ticket_no(unsigned long min, unsigned long max);
+
+int ticketNoExists(unsigned long tickno);
+
+void dispTicket();
+
+
 #endif //SEM1_C_MINI_PROJECT_BOOK_TRAIN_H

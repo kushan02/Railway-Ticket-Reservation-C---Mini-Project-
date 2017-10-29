@@ -23,6 +23,10 @@ int add_train() {
         if (fp != NULL) {
             fwrite(&train_obj, sizeof(train_obj), 1, fp);
             fclose(fp);
+
+            printf("\n\nTrain %s added successfully! Press enter to continue...", train_obj.train_name);
+            getch();
+
             return 1;
         }
     } else {

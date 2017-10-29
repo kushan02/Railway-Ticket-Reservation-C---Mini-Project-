@@ -52,3 +52,46 @@ void anyKeytoExit(char *er) {
         exit(0);
 }
 
+int checkDate(char *date) {
+    int len = strlen(date);
+    if (len != 10)
+        return 0;
+
+    int i = 0;
+
+    if (isdigit(date[0]) && isdigit(date[1]) && date[2] == '/' && isdigit(date[3]) && isdigit(date[4]) &&
+        date[5] == '/' && isdigit(date[6]) &&
+        isdigit(date[7]) && isdigit(date[8]) && isdigit(date[9])) {
+
+        return 1;
+    }
+
+    return 0;
+}
+
+
+void displayBooking_Header() {
+    clear();
+    printf("\n%20s%20s%20s%20s%20s", "TICKET NO.", "NAME  ", "D.O.J.  ", "TRAIN NO.", "FARE (in Rs.)");
+}
+
+void displayBooking_Separator() {
+    int i;
+    printf("\n");
+    for (i = 0; i < 5 * 20; i++) {
+        printf("-");
+    }
+}
+
+void displayBooking_TrainDetails(struct TXN_S *obj) {
+
+    printf("\n%20llu%20s%20s%20d%20ld", obj->ticket_no, obj->name, obj->date, obj->train_no, obj->fare);
+
+}
+
+
+
+
+
+
+
