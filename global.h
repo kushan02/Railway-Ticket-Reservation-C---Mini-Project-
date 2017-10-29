@@ -10,6 +10,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <conio.h>
+#include <ctype.h>
 
 
 struct TRAIN_S {
@@ -29,6 +30,8 @@ extern struct TRAIN_S train_obj;
 
 void clear();
 
+void clearBuffer();
+
 void getString(char *str);
 
 void displayMenu_Header();
@@ -38,6 +41,8 @@ void displayMenu_Separator();
 void displayMenu_Footer();
 
 void displayMenu_TrainDetails(struct TRAIN_S *obj);
+
+void anyKeytoExit(char *er);
 
 
 #endif //SEM1_C_MINI_PROJECT_GLOBAL_H

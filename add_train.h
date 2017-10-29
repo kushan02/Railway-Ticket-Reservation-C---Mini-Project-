@@ -5,21 +5,19 @@
 #ifndef SEM1_C_MINI_PROJECT_ADD_TRAIN_H
 #define SEM1_C_MINI_PROJECT_ADD_TRAIN_H
 
-#include "global.h"
+//#include "global.h"
 
-//struct TRAIN_S;
-
-//const char train_record_file[] = "TRAIN.dat";
-
-
+#include "train_function_common.h"
 
 int add_train();
 
-int trainExists(int);
+//int trainExists(int);
 
 void getTrainDetails();
 
 void displayTrains();
+
+int delTrain();
 
 
 #endif //SEM1_C_MINI_PROJECT_ADD_TRAIN_H

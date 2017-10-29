@@ -19,28 +19,27 @@ void reservation_menu() {
 
         printf("\nEnter your selection: ");
         scanf("%d", &sel);
-    } while (sel < 1 || sel > 5);
+    } while (sel < 1 || sel > 6);
 
     switch (sel) {
         case 1:
             while (!add_train());
             return;
-            break;
         case 2:
             //  while (!createAccount());
             displayTrains();
             return;
-            break;
 
         case 3:
             findTrain();
             return;
-            break;
         case 4:
-            //    bookTrain();
+            while (!book_train());
             return;
-            break;
         case 5:
+            while (!delTrain());
+            return;
+        case 6:
             exit(0);
     }
 
@@ -54,7 +53,8 @@ void showReservationMenu() {
     printf("1. Add Train\n");
     printf("2. Display all Trains\n");
     printf("3. Search for Trains\n");
-    printf("4. Reserve a train\n");
-    printf("5. Exit\n");
+    printf("4. Reserve a train ticket\n");
+    printf("5. Delete a train\n");
+    printf("6. Exit\n");
 
 }

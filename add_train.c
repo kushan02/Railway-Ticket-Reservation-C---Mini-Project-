@@ -5,25 +5,7 @@
 #include "add_train.h"
 
 
-//const char train_record_file[] = "TRAIN.dat";
-
-/*
-
-struct TRAIN_S {
-    unsigned int train_number;
-    char train_name[30];
-    char origin[30];
-    char destination[30];
-    char departure_time[6];
-    char arrival_time[6];
-    unsigned int seat_available;
-} train_obj;
-*/
-
 struct TRAIN_S train_obj;
-
-
-//static const struct TRAIN_S EmptyTrainStruct;
 
 
 int add_train() {
@@ -63,6 +45,7 @@ int trainExists(int tno) {
     if (fp != NULL) {
         while (fread(&objT, sizeof(objT), 1, fp)) {
             if (objT.train_number == tno) {
+                fclose(fp);
                 return 1;
             }
         }
@@ -76,81 +59,97 @@ int trainExists(int tno) {
 void getTrainDetails() {
     clear();
 
-    //  train_obj = EmptyTrainStruct;
-
     printf("Add Train details:\n\n");
 
     printf("Train Number: ");
     scanf("%d", &train_obj.train_number);
 
-    printf("Train Name: ");
+    printf("\nTrain Name: ");
     getString(train_obj.train_name);
 
-    printf("Origin: ");
+    printf("\nOrigin: ");
     getString(train_obj.origin);
 
-    printf("Destination: ");
+    printf("\nDestination: ");
     getString(train_obj.destination);
 
-    printf("Departure time: ");
+    printf("\nDeparture time: ");
     getString(train_obj.departure_time);
 
-    printf("Arrival time: ");
+    printf("\nArrival time: ");
     getString(train_obj.arrival_time);
 
-    printf("Seats available: ");
+    printf("\nSeats available: ");
     scanf("%d", &train_obj.seat_available);
 
 }
 
 void displayTrains() {
 
-    //   clear();
-
     FILE *fp;
     fp = fopen(train_record_file, "rb");
-
-    int i;
-
-//    printf("\n%15s%15s%15s%15s%15s%15s%15s\n", "TR NO.", "TRN NAME", "ORIGIN", "DEP", "DESTN", "ARRV", "SEAT AVL");
-
-//    printf("\n%15s%15s%15s%15s%15s%15s%15s\n", "TRAIN NO.", "TRAIN NAME", "ORIGIN", "DEPARTURE", "DESTINATION",
-//           "ARRIVAL", "SEATS AVBL");
-
 
     displayMenu_Header();
 
     displayMenu_Separator();
 
-/*
-    for (i = 0; i < 7 * 15; i++) {
-        printf("-");
-    }
-*/
-
-    //  printf("\n");
-
     if (fp != NULL) {
+
         while (fread(&train_obj, sizeof(train_obj), 1, fp)) {
-            /*  printf("%15d%15s%15s%15s%15s%15s%15d\n", train_obj.train_number, train_obj.train_name, train_obj.origin,
-                     train_obj.departure_time, train_obj.destination, train_obj.arrival_time, train_obj.seat_available);
-  */
-
             displayMenu_TrainDetails(&train_obj);
-
         }
-
         fclose(fp);
 
         displayMenu_Separator();
-
-        /*   for (i = 0; i < 7 * 15; i++) {
-               printf("-");
-           }*/
     }
 
     displayMenu_Footer();
 
-    /* printf("\nPress enter to continue...");
-     getch();*/
+}
+
+int delTrain() {
+
+    int tno;
+    FILE *fp, *fp_tmp;
+
+    clear();
+
+    printf("Delete a train entry:\n\n");
+
+    printf("Enter Train Number of train to delete: ");
+    scanf("%d", &tno);
+
+    if (trainExists(tno)) {
+        fp = fopen(train_record_file, "rb");
+        fp_tmp = fopen("tmp.dat", "wb");
+
+        while (fread(&train_obj, sizeof(train_obj), 1, fp)) {
+            if (train_obj.train_number == tno)
+                continue;
+
+            fwrite(&train_obj, sizeof(train_obj), 1, fp_tmp);
+        }
+
+        fclose(fp);
+        fclose(fp_tmp);
+
+        remove(train_record_file);
+
+        rename("tmp.dat", train_record_file);
+
+        printf("\nTrain number %d deleted successfully! Press enter to continue.", tno);
+        getch();
+        return 1;
+
+    } else {
+        char ch;
+        printf("\nERROR: Train number %d does not exists", tno);
+        printf("\nPress enter to try again or any other key to exit...\n");
+        if ((ch = getch()) != '\r')
+            exit(0);
+
+        return 0;
+    }
+
+
 }

@@ -15,6 +15,11 @@ void getString(char *str) {
     fflush(stdin);
 }
 
+void clearBuffer()
+{
+    fflush(stdin);
+}
+
 void displayMenu_Header() {
     clear();
     printf("\n%15s%15s%15s%15s%15s%15s%15s", "TRAIN NO.", "TRAIN NAME", "ORIGIN", "DEPARTURE", "DESTINATION",
@@ -38,5 +43,13 @@ void displayMenu_TrainDetails(struct TRAIN_S *obj) {
 void displayMenu_Footer() {
     printf("\n\n\t\tPress enter to continue...");
     getch();
+}
+
+void anyKeytoExit(char *er) {
+    char ch;
+    printf("\nERROR: %s", er);
+    printf("\nPress enter to try again or any other key to exit...\n");
+    if ((ch = getch()) != '\r')
+        exit(0);
 }
 
